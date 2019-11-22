@@ -1,6 +1,6 @@
 pragma solidity >=0.5.0;
 
-/****************************************************************************************************
+/***************************************************************************************************************************
  * This module is mainly focused mainly to trace back the tamper proof of the wine available in the market.
  *
  *
@@ -12,7 +12,7 @@ pragma solidity >=0.5.0;
  *                    to beverage owners for bottle filling.
  * KingFisherBeverageVendor - helps beverage vendor to fill the wine and push the wine ingredients into tamper proof p2p network.
  * Buyer - helps customer to buy tamper proof product.
- ***************************************************************************************************/
+ **************************************************************************************************************************/
 
 // This contract trace back the label that is being created for the beverage liquor manufacture.
 // basically this contract have set of keys called approved and sold which determine whether the
@@ -37,14 +37,11 @@ contract LabelManufacture {
     mapping(uint256 => labelDetails) labelInformation;  // data structure to hold all the information of label based on unique ID
     mapping(uint256 => bool) labelExists;  // to check whether label exists or not
     uint256[] private availableLabel;  // list of available Labels to be used by beverage company
-
+    // sets the contract owner address (address which deployes the contract)
     constructor() public {
         contractOwner = msg.sender;
     }
 
-    function updateManufactureAddress(address payable manufactureAddress) private OnlyOwner{
-        labelManufactureAddress = manufactureAddress;
-    }
     // MODIFIER
     // access control: only this label company can access
     modifier onlyLabelManufacture {
@@ -57,19 +54,26 @@ contract LabelManufacture {
         _;
     }
     // access control: only contract owner can change the vendor address
-    modifier OnlyOwner {
-        require(msg.sender == contractOwner, "Only contract owner update the data...");
+    modifier onlyContractOwner {
+        require(msg.sender == contractOwner, "Only contract owner can update the data...");
         _;
     }
 
     // FUNCTION
+    // updateLabelManufactureAddress: helps to update the manufacture address
+    function updateLabelManufactureAddress(address payable manufactureAddress) private
+        onlyContractOwner
+    {
+        labelManufactureAddress = manufactureAddress;
+    }
+    
     // createLabel: create a label with all necessary details for the beverage company
     // only label manufacture can create new label
     event CreateLabelLog(uint256 labelID, string message);
     function createLabel(uint256 labelIDFromIOT, uint labelCost) public
         onlyLabelManufacture
     {
-        require(labelExists[labelIDFromIOT] == false, "Label ID already exists cannot create the label");
+        require(labelExists[labelIDFromIOT] == false, "Label ID already exists. Cannot create the label");
         labelInformation[labelIDFromIOT].labelID = labelIDFromIOT;
         labelInformation[labelIDFromIOT].productID = "null";
         labelInformation[labelIDFromIOT].approved = false;
@@ -79,7 +83,7 @@ contract LabelManufacture {
         labelInformation[labelIDFromIOT].labelPrice = labelCost * (10*18);
         labelInformation[labelIDFromIOT].wineIngredients = "null";
         labelExists[labelIDFromIOT] = true;
-        availableLabel.push(labelIDFromIOT);
+        availableLabel.push(labelIDFromIOT);  // pushes label id for tracking back
         emit CreateLabelLog(labelIDFromIOT, "Successfully uploaded the labelID");
     }
 
@@ -142,7 +146,7 @@ contract LabelManufacture {
 // KingFisherBeverageVendor: vendor based contract which inherits the label manufacture properties for the label id's.
 // helps to update filled liquor statistics based on label ID and approves it to do sales.
 contract KingFisherBeverageVendor is LabelManufacture {
-    address payable constant beverageManufactureAddress = 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c;
+    address payable beverageManufactureAddress = 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c;
 
     // MODIFIER
     // access control: only this beverage company can access
@@ -151,7 +155,20 @@ contract KingFisherBeverageVendor is LabelManufacture {
         _;
     }
 
+    // access control: only contract owner can change the vendor address
+    modifier onlyContractOwner {
+        require(msg.sender == contractOwner, "Only contract owner can update the data...");
+        _;
+    }
+
     // FUNCTION
+    // updateBeverageManufactureAddress: helps to update the manufacture address
+    function updateBeverageManufactureAddress(address payable manufactureAddress) private
+        onlyContractOwner
+    {
+        beverageManufactureAddress = manufactureAddress;
+    }
+
     // helps to fill the liquor for a label ID with all the information and mark it as approved for sales.
     event fillLiquorLog(
         string productID,
@@ -202,7 +219,8 @@ contract Buyer is LabelManufacture {
     // address of the buyer
     address payable private buyerAddress;
 
-    // sell: to buy the liquor
+    // FUNCTION
+    // buy: to buy the liquor
     function buy(uint256 scanQRCode)
         public
     {
