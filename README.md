@@ -23,3 +23,12 @@ An de-centralised liquor exchange - build on top of the ethereum solidity, helps
  **Ganache CLI** - For testing in local network
  **Solidity** - Ethereum smart contract
  
+
+
+ Todo:
+  - High Priority: 
+    - Need to update transfer fund from beverage to label vendor
+    - Need to check for the transfer conversion
+  - Low Priority:
+    - Try to create seller contract
+    - Introducting fiber tagging

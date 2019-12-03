@@ -1,9 +1,9 @@
+const EverLedgerLiquorManager = artifacts.require("EverLedgerLiquorManager");
 const LabelManufacture = artifacts.require("LabelManufacture");
-const KingFisherBeverageVendor = artifacts.require("KingFisherBeverageVendor");
-const Buyer = artifacts.require("Buyer");
+const BeverageManufacture = artifacts.require("BeverageManufacture");
 
 module.exports = function(deployer) {
+  deployer.deploy(EverLedgerLiquorManager);
   deployer.deploy(LabelManufacture);
-  deployer.deploy(KingFisherBeverageVendor);
-  deployer.deploy(Buyer);
+  deployer.deploy(BeverageManufacture);
 };
