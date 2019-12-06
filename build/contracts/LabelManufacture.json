@@ -8131,15 +8131,135 @@
           "name": "BuyLiqiorLog",
           "type": "event",
           "signature": "0x72a46ea6075b4feaaf5ff7b1454515cd595bc6397c1a0f1762e0c34678894ac9"
+        },
+        "0xa62445a6bb35ec94a8935a20ddce5396f1b9bda43a32281849991e8926e87382": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "owneraddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "contractaddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "name",
+              "type": "string"
+            }
+          ],
+          "name": "getAllInfoLog",
+          "type": "event",
+          "signature": "0xa62445a6bb35ec94a8935a20ddce5396f1b9bda43a32281849991e8926e87382"
+        },
+        "0xfb9dede3411f6f0316aa1b30ca34b46c241e6c78e9de7cfb67cef50aabe8a214": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "manageraddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "RegisterMyIdentityLog",
+          "type": "event",
+          "signature": "0xfb9dede3411f6f0316aa1b30ca34b46c241e6c78e9de7cfb67cef50aabe8a214"
+        },
+        "0x0d090303c8dec9fefe404748a095a891604f25b687a887ba60d091aa1a8dd520": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "labelType",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "labelowneraddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "cost",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "AddLabelStandardCostLog",
+          "type": "event",
+          "signature": "0x0d090303c8dec9fefe404748a095a891604f25b687a887ba60d091aa1a8dd520"
+        },
+        "0x8743a52a4d6cb7eb3025a01bd68e1d6abf842a9d581dc031ce4ef061c347023d": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "labelID",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "result",
+              "type": "bool"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "LabelIDExistanceLog",
+          "type": "event",
+          "signature": "0x8743a52a4d6cb7eb3025a01bd68e1d6abf842a9d581dc031ce4ef061c347023d"
+        },
+        "0x67f6f576b0051c3ae4c1800b46674c2351b52b04b8159c4c875f6dc1056151bf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "labelid",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "requestedvendoraddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "cost",
+              "type": "uint256"
+            }
+          ],
+          "name": "GenerateLabelLog",
+          "type": "event",
+          "signature": "0x67f6f576b0051c3ae4c1800b46674c2351b52b04b8159c4c875f6dc1056151bf"
         }
       },
       "links": {},
-      "address": "0x0c9e690541adC52B0F5A3B2729Cd01948B749e9e",
-      "transactionHash": "0x3bad502375fee9edee20be40fa0a98e0e1cfd4c7096ecd68ef8958e198023fd9"
+      "address": "0x8c90f12FBFF11253dc90D63769FBb25A6c713854",
+      "transactionHash": "0x642d05ef8c5cf80b498f15a6959ae0663f87c86de109a0706f65ec345204e9ab"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-12-03T13:11:51.683Z",
+  "updatedAt": "2019-12-03T13:17:21.495Z",
   "devdoc": {
     "author": "vivekganesan",
     "methods": {
