@@ -9318,9 +9318,63 @@
     "name": "solc",
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "5777": {
+      "events": {
+        "0xfb9dede3411f6f0316aa1b30ca34b46c241e6c78e9de7cfb67cef50aabe8a214": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "manageraddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "RegisterMyIdentityLog",
+          "type": "event",
+          "signature": "0xfb9dede3411f6f0316aa1b30ca34b46c241e6c78e9de7cfb67cef50aabe8a214"
+        },
+        "0xa69c4ceb8f00f229cd91d514f9fb4156a10e5e2bfa93463cf57be36e03f5bf47": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "productid",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "labelid",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "fillLiquorLog",
+          "type": "event",
+          "signature": "0xa69c4ceb8f00f229cd91d514f9fb4156a10e5e2bfa93463cf57be36e03f5bf47"
+        }
+      },
+      "links": {},
+      "address": "0xfE3602babB89c75A8e5FE63Aea08831418c7AC57",
+      "transactionHash": "0x3f329541ad7b3e31452acdd82baaed9bc06a83102ea2893b1d6450f638d9edda"
+    }
+  },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-12-03T13:11:51.671Z",
+  "updatedAt": "2019-12-03T13:17:21.510Z",
   "devdoc": {
     "author": "vivekganesan",
     "methods": {

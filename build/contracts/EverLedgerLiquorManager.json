@@ -12936,9 +12936,175 @@
     "name": "solc",
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "5777": {
+      "events": {
+        "0xa3162854d3e7fe5184b114bb1db88aed367f0eca18c691b69b3f5442b9411807": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "label_vendor_name",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "label_vendor_address",
+              "type": "address"
+            }
+          ],
+          "name": "getLabelVendorAddressLog",
+          "type": "event",
+          "signature": "0xa3162854d3e7fe5184b114bb1db88aed367f0eca18c691b69b3f5442b9411807"
+        },
+        "0xa62f96a2626aa0a39db84eb687e9e6a4dd4e3fe0b594a3da66c7f11606455940": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "beverage_vendor_name",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "beverage_vendor_address",
+              "type": "address"
+            }
+          ],
+          "name": "getBeverageVendorAddressLog",
+          "type": "event",
+          "signature": "0xa62f96a2626aa0a39db84eb687e9e6a4dd4e3fe0b594a3da66c7f11606455940"
+        },
+        "0x6a32368aacef2d132f1ab9102d71b24c9aa3d41a602df78ebcc7c9410d8dc560": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "vendorAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "vendorName",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "addVendorLog",
+          "type": "event",
+          "signature": "0x6a32368aacef2d132f1ab9102d71b24c9aa3d41a602df78ebcc7c9410d8dc560"
+        },
+        "0xa68054ed7bde0da00352bf750c2b485f5b59e170cb085a8b378cf4aa0b22abbe": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "labelvendorname",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "beveragevendorname",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "labeltype",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "labelcost",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "fetchLabelLog",
+          "type": "event",
+          "signature": "0xa68054ed7bde0da00352bf750c2b485f5b59e170cb085a8b378cf4aa0b22abbe"
+        },
+        "0xefe8dae96a3fb898d87490837124ea602b87c015345342b3007a19e8e0e1756b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "labelManufactureAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "labelType",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "cost",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "labelDetailsLog",
+          "type": "event",
+          "signature": "0xefe8dae96a3fb898d87490837124ea602b87c015345342b3007a19e8e0e1756b"
+        },
+        "0xd7963c0d55f80395de3467a71297e8688247871c2058dc8cbb337e4f25ee2393": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "labelid",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "productid",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "vendorname",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "year",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "beveragecost",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "name": "buyliquorLog",
+          "type": "event",
+          "signature": "0xd7963c0d55f80395de3467a71297e8688247871c2058dc8cbb337e4f25ee2393"
+        }
+      },
+      "links": {},
+      "address": "0xc4da4D0F7ff4A707a44994f7c301fc45a5961777",
+      "transactionHash": "0x0984a1db716529cbd380fc516506572909a7b6a395176fbba37c68a4e62edaa6"
+    }
+  },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-12-03T13:11:51.674Z",
+  "updatedAt": "2019-12-03T13:17:21.488Z",
   "devdoc": {
     "author": "vivekganesan",
     "methods": {
