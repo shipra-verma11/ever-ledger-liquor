@@ -99,14 +99,22 @@ contract EverLedgerLiquorManager{
         return (label, labelStandard[buyerAddress].labelCost);
     }
     // Stores cost for the each label type based on the label vendor
-    /// @param labelManufactureAddress address of the label vendor
-    /// @param labelType type of the label like S,M,L,Xl,XXL
+    /// @param forBeverageManufactureAddress address of the beverage vendor
+    /// @param labelType This will be the vendor names
+    /// @notice todo : currently it handles only one type need to integrate with multiple types
     /// @param cost cost of the label in ether
-    function labelDetails(address labelManufactureAddress, string calldata labelType, uint256 cost) external{
-        labelStandard[labelManufactureAddress].labelCost = cost;
-        labelStandard[labelManufactureAddress].labelType = labelType;
-        emit labelDetailsLog(labelManufactureAddress, labelStandard[labelManufactureAddress].labelType,
-                labelStandard[labelManufactureAddress].labelCost, "label type has been added");
+    function labelDetails(address forBeverageManufactureAddress, string calldata labelType, uint256 cost) external{
+        labelStandard[forBeverageManufactureAddress].labelCost = cost;
+        labelStandard[forBeverageManufactureAddress].labelType = labelType;
+        emit labelDetailsLog(forBeverageManufactureAddress, labelStandard[forBeverageManufactureAddress].labelType,
+                labelStandard[forBeverageManufactureAddress].labelCost, "label type has been added");
+    }
+    // fetches the label cost for the given vendor
+    /// @param beverageVendorName This will be vendor name who wants to consume the label
+    function getLabelCost(string calldata beverageVendorName) external returns(uint256 cost){
+        require(beverageVendorExistance[beverageVendorName], "Beverage Vendor doesn't exists...");
+        address vendorAddress = getBeverageVendorAddress(beverageVendorName);
+        return labelStandard[vendorAddress].labelCost;
     }
     // Helps consumers to buy and verify the products
     /// @param labelid scanned id of the label
