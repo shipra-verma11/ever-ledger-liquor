@@ -87,9 +87,9 @@ contract LabelManufacture{
     // so make sure to update the label cost for each label type
     /// @param labelType type of the label
     /// @param cost cost for the label in ether
-    function AddLabelStandardCost(string memory labelType, uint256 cost) public onlyLabelOwner{
-        elm.labelDetails(LabelOwnerAddress, labelType, cost);
-        emit AddLabelStandardCostLog(labelType, LabelOwnerAddress, cost, "Added label type with cost.");
+    function AddLabelStandardCost(address beverageVendor, string memory labelType, uint256 cost) public onlyLabelOwner{
+        elm.labelDetails(beverageVendor, labelType, cost);
+        emit AddLabelStandardCostLog(labelType, beverageVendor, cost, "Added label type with cost.");
     }
     // Generate unique label for the buyers
     /// @notice Generating unique label invloves initial value derived from the initial label counter
