@@ -51,14 +51,14 @@ contract BeverageManufacture {
     }
     // Fetch the company name defined in the contract
     /// @notice This is just a reference function to view the company name
-    function GetMyCompanyName() public view onlyBeverageOwner returns(string memory){
+    function GetMyCompanyName() external view onlyBeverageOwner returns(string memory){
         return BeverageManufactureName;
     }
     // Updates the company name
     /// @notice Updating the company name needs to be re-registered with the everledger manager
     /// because only the registered vendor can perform trading
     /// @param companyName name of the company
-    function UpdateCompanyName(string memory companyName) public onlyBeverageOwner{
+    function UpdateCompanyName(string calldata companyName) external onlyBeverageOwner{
         BeverageManufactureName = companyName;
         RegisterMyIdentity(BeverageManufactureName, EverLedgerManagerContractAddress);
     }
@@ -125,7 +125,7 @@ contract BeverageManufacture {
     }
     // Verify the existance of the product
     /// @param productIdentityNumber id of the product
-    function productIDExistance(string memory productIdentityNumber) public view returns
+    function productIDExistance(string calldata productIdentityNumber) external view returns
         (bool productIDResults, uint256 year, bool approved, bool sold, uint256 labelid, uint256 beverageprice){
         bool result = false;
         if(ProductExistance[productIdentityNumber]){

@@ -37,7 +37,7 @@ contract EverLedgerLiquorManager{
     mapping(string => BeverageVendorInfo) BeverageVendorLedger;
     // Stores cost for each label standards
     /// @notice helps beverage vendor to buy for the label based on the type
-    mapping(address => labelStandardInformation) labelStandard;
+    mapping(string => labelStandardInformation) labelStandard;
     // Add everledger manager address and everledger contract address
     constructor() public {
         everLedgerManagerAddress = msg.sender;
@@ -94,27 +94,28 @@ contract EverLedgerLiquorManager{
         returns (uint256 labelID, uint256 labelCost) {
         LabelManufacture lm = LabelManufacture(LabelVendorLedger[fromLabelVendor].LabelVendorContractAddress);
         address buyerAddress = getBeverageVendorAddress(forBeverageVendor);
-        uint256 label = lm.GenerateLabel(buyerAddress, labelType, labelStandard[buyerAddress].labelCost);
-        emit fetchLabelLog(fromLabelVendor, forBeverageVendor, labelType, labelStandard[buyerAddress].labelCost, "Label has been generated");
-        return (label, labelStandard[buyerAddress].labelCost);
+        uint256 label = lm.GenerateLabel(buyerAddress, labelType, labelStandard[forBeverageVendor].labelCost);
+        emit fetchLabelLog(fromLabelVendor, forBeverageVendor, labelType,
+                        labelStandard[forBeverageVendor].labelCost, "Label has been generated");
+        return (label, labelStandard[forBeverageVendor].labelCost);
     }
     // Stores cost for the each label type based on the label vendor
-    /// @param forBeverageManufactureAddress address of the beverage vendor
+    /// @param beverageVendorName name of the beverage vendor
     /// @param labelType This will be the vendor names
     /// @notice todo : currently it handles only one type need to integrate with multiple types
     /// @param cost cost of the label in ether
-    function labelDetails(address forBeverageManufactureAddress, string calldata labelType, uint256 cost) external{
-        labelStandard[forBeverageManufactureAddress].labelCost = cost;
-        labelStandard[forBeverageManufactureAddress].labelType = labelType;
-        emit labelDetailsLog(forBeverageManufactureAddress, labelStandard[forBeverageManufactureAddress].labelType,
-                labelStandard[forBeverageManufactureAddress].labelCost, "label type has been added");
+    function labelDetails(string calldata beverageVendorName, string calldata labelType, uint256 cost) external{
+        require(beverageVendorExistance[beverageVendorName], "Beverage Vendor doesn't exists...");
+        labelStandard[beverageVendorName].labelCost = cost;
+        labelStandard[beverageVendorName].labelType = labelType;
+        emit labelDetailsLog(beverageVendorName, labelStandard[beverageVendorName].labelType,
+                labelStandard[beverageVendorName].labelCost, "label type has been added");
     }
     // fetches the label cost for the given vendor
     /// @param beverageVendorName This will be vendor name who wants to consume the label
     function getLabelCost(string calldata beverageVendorName) external returns(uint256 cost){
         require(beverageVendorExistance[beverageVendorName], "Beverage Vendor doesn't exists...");
-        address vendorAddress = getBeverageVendorAddress(beverageVendorName);
-        return labelStandard[vendorAddress].labelCost;
+        return labelStandard[beverageVendorName].labelCost;
     }
     // Helps consumers to buy and verify the products
     /// @param labelid scanned id of the label
@@ -132,22 +133,17 @@ contract EverLedgerLiquorManager{
         uint256 beverageCost;
         (result, yearManufactured, approved, sold, labelId, beverageCost) = bm.productIDExistance(productid);
         require(result, "Product ID doen't exists with beverage vendor.");
-        if(labelid != labelId){
-            revert("Provided label ID doesn't match with the product ID.");
-        }
-        if(approved == true && sold == false){
-            BeverageVendorLedger[vendorname].BeverageVendorAddress.transfer(beverageCost);
-            emit buyliquorLog(labelId, productid, vendorname, yearManufactured, beverageCost, "Thank You !!!!!");
-        }
-        else{
-            revert("Product is not approved");
-        }
+        require(labelid == labelId, "Provided label ID doesn't match with the product ID.");
+        require(approved, "Provided label ID is not approved.");
+        require(!sold, "Provided label ID is already sold.");
+        BeverageVendorLedger[vendorname].BeverageVendorAddress.transfer(beverageCost);
+        emit buyliquorLog(labelId, productid, vendorname, yearManufactured, beverageCost, "Thank You !!!!!");
     }
     /// @notice events
     event getLabelVendorAddressLog(string label_vendor_name, address label_vendor_address);
     event getBeverageVendorAddressLog(string beverage_vendor_name, address beverage_vendor_address);
     event addVendorLog(address vendorAddress, string vendorName, string msg);
     event fetchLabelLog(string labelvendorname, string beveragevendorname, string labeltype, uint256 labelcost, string msg);
-    event labelDetailsLog(address labelManufactureAddress, string labelType, uint256 cost, string msg);
+    event labelDetailsLog(string beveragevendorname, string labelType, uint256 cost, string msg);
     event buyliquorLog(uint256 labelid, string productid, string vendorname, uint256 year, uint256 beveragecost, string msg);
 }

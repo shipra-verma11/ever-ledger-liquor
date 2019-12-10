@@ -53,16 +53,8 @@ contract LabelManufacture{
     }
     // Fetch the company name defined in the contract
     /// @notice This is just a reference function to view the company name
-    function GetMyCompanyName() public view onlyLabelOwner returns(string memory){
+    function GetMyCompanyName() external view onlyLabelOwner returns(string memory){
         return LabelManufactureName;
-    }
-    // Updates the company name
-    /// @notice Updating the company name needs to be re-registered with the everledger manager
-    /// because only the registered vendor can perform trading
-    /// @param companyName name of the company
-    function UpdateCompanyName(string memory companyName) public onlyLabelOwner{
-        LabelManufactureName = companyName;
-        RegisterMyIdentity(LabelManufactureName, EverLedgerManagerContractAddress);
     }
     // Register this owner with the ever ledger manager
     /// @notice For first time each vendor has to be registered with manager, only registered vendor can perform trading
@@ -81,13 +73,21 @@ contract LabelManufacture{
         elm.addVendor(LabelOwnerAddress, LabelManufactureName, "label", LabelContractAddress);
         emit RegisterMyIdentityLog(LabelManufactureName, EverLedgerManagerContractAddress, "Vendor Registered.");
     }
+    // Updates the company name
+    /// @notice Updating the company name needs to be re-registered with the everledger manager
+    /// because only the registered vendor can perform trading
+    /// @param companyName name of the company
+    function UpdateCompanyName(string calldata companyName) external onlyLabelOwner{
+        LabelManufactureName = companyName;
+        RegisterMyIdentity(LabelManufactureName, EverLedgerManagerContractAddress);
+    }
     // Add label cost and updates the manager with label type and cost
     /// @notice Based on the label type each consuming vendor has to tranfer the cost
     // If the cost and label type is not registered with the manager then tranfer of ether might be lost
     // so make sure to update the label cost for each label type
     /// @param labelType type of the label
     /// @param cost cost for the label in ether
-    function AddLabelStandardCost(address beverageVendor, string memory labelType, uint256 cost) public onlyLabelOwner{
+    function AddLabelStandardCost(address beverageVendor, string calldata labelType, uint256 cost) external onlyLabelOwner{
         elm.labelDetails(beverageVendor, labelType, cost);
         emit AddLabelStandardCostLog(labelType, beverageVendor, cost, "Added label type with cost.");
     }
@@ -114,18 +114,15 @@ contract LabelManufacture{
     }
     // To check whether label ID exists in the system
     /// @param labelIdentityNumber label id number
-    function LabelIDExistance(uint256 labelIdentityNumber) public returns (bool labelIDResults){
+    function LabelIDExistance(uint256 labelIdentityNumber) external returns (bool labelIDResults){
         bool result = false;
-        if(labelExists[labelIdentityNumber]){
-            result = true;
-            emit LabelIDExistanceLog(labelIdentityNumber, result, "Label exists..");
-            return result;
-        }
-        emit LabelIDExistanceLog(labelIdentityNumber, result, "Label doesn't exists..");
+        require(labelExists[labelIdentityNumber], "Label doesn't existst in the system");
+        emit LabelIDExistanceLog(labelIdentityNumber, result, "Label exists..");
+        result = true;
         return result;
     }
     // Only for testing the stored data.
-    function getAllInfo() public returns(address labelowneraddress, address labelcontractaddress, string memory labelvendorname) {
+    function getAllInfo() external returns(address labelowneraddress, address labelcontractaddress, string memory labelvendorname) {
         emit getAllInfoLog(LabelOwnerAddress, LabelContractAddress, LabelManufactureName);
         return (LabelOwnerAddress, LabelContractAddress, LabelManufactureName);
     }
